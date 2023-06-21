@@ -7,13 +7,14 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class PendingPaymentResource extends JsonResource
 {
-    /**
-     * Transform the resource into an array.
-     *
-     * @return array<string, mixed>
-     */
-    public function toArray(Request $request): array
+    public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'customer_id' => $this->customer_id,
+            'pending_amount' => $this->pending_amount,
+            'due_date' => $this->due_date,
+            'payment_status' => $this->payment_status,
+        ];
     }
 }

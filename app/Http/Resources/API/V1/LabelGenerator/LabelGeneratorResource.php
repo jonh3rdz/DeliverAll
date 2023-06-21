@@ -7,13 +7,17 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class LabelGeneratorResource extends JsonResource
 {
-    /**
-     * Transform the resource into an array.
-     *
-     * @return array<string, mixed>
-     */
-    public function toArray(Request $request): array
+    public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'data' => $this->collection,
+            'meta' => [
+                'Group' => 'DeliverAll',
+                'Authors' => [
+                    'Jonathan'
+                ],
+            ],
+            'type' => 'LabelGenerators'
+        ];
     }
 }

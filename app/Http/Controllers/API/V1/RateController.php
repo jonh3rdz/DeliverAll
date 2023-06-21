@@ -4,46 +4,82 @@ namespace App\Http\Controllers\API\V1;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Requests\API\V1\Rate\StoreRateRequest;
+use App\Http\Requests\API\V1\Rate\UpdateRateRequest;
+use App\Http\Resources\API\V1\Rate\RateCollection;
+use App\Http\Resources\API\V1\Rate\RateResource;
+use App\Models\API\V1\Rate;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class RateController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        return new RateCollection(Rate::all());
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function search($field, $query)
     {
-        //
+        return new RateCollection(Rate::where($field, 'LIKE', "%$query%")->paginate(10));
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function store(StoreRateRequest $request)
     {
-        //
+        $rate = Rate::create($request->all());
+        return response()->json([
+            'res' => true,
+            'data' => $rate,
+            'msg' => 'Guardado correctamente'
+        ], 201);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function show($idRate)
     {
-        //
+        try {
+            $rate = Rate::findOrFail($idRate);
+            return response()->json(new RateResource($rate), 200);
+        } catch (ModelNotFoundException $exception) {
+            return response()->json([
+                'res' => false,
+                'msg' => 'La tarifa no existe'
+            ], 404);
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function update(UpdateRateRequest $request, $idRate)
     {
-        //
+        try {
+            $rate = Rate::findOrFail($idRate);
+            $rate->update($request->all());
+            return response()->json([
+                'res' => true,
+                'data' => $rate,
+                'msg' => 'Actualizado correctamente'
+            ], 200);
+        } catch (ModelNotFoundException $exception) {
+            return response()->json([
+                'res' => false,
+                'msg' => 'La tarifa no existe'
+            ], 404);
+        }
+    }
+
+    public function destroy($idRate)
+    {
+        try {
+            $rate = Rate::findOrFail($idRate);
+            $rate->delete();
+
+            return response()->json([
+                'res' => true,
+                'data' => $rate,
+                'message' => 'Eliminado correctamente'
+            ], 200);
+        } catch (ModelNotFoundException $exception) {
+            return response()->json([
+                'res' => false,
+                'msg' => 'La tarifa no existe'
+            ], 404);
+        }
     }
 }

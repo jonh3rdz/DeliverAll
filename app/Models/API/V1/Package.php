@@ -12,14 +12,17 @@ class Package extends Model
     protected $table = 'packages';
 
     protected $fillable = [
-        'customer_id', 
-        'package_description', 
-        'weight', 
-        'size', 
+        'customer_id',
+        'package_description',
+        'weight',
+        'size',
         'package_value',
-        'estimated_delivery_date', 
-        'creation_date'
+        'estimated_delivery_date',
+        'creation_date',
     ];
 
-    protected $dates = ['estimated_delivery_date', 'creation_date'];
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class);
+    }
 }

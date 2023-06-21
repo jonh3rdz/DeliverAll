@@ -8,4 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Router extends Model
 {
     use HasFactory;
+
+    protected $table = 'routers';
+
+    protected $fillable = [
+        'name',
+        'address',
+        'phone',
+        'hiring_date'
+    ];
 }

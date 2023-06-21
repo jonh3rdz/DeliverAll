@@ -7,13 +7,17 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class PackageResource extends JsonResource
 {
-    /**
-     * Transform the resource into an array.
-     *
-     * @return array<string, mixed>
-     */
-    public function toArray(Request $request): array
+    public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'customer_id' => $this->customer_id,
+            'package_description' => $this->package_description,
+            'weight' => $this->weight,
+            'size' => $this->size,
+            'package_value' => $this->package_value,
+            'estimated_delivery_date' => $this->estimated_delivery_date,
+            'creation_date' => $this->creation_date,
+        ];
     }
 }

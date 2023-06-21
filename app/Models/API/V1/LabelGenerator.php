@@ -9,7 +9,18 @@ class LabelGenerator extends Model
 {
     use HasFactory;
 
+    protected $table = 'label_generators';
+
     protected $fillable = [
-        'configurations',
+        'configurations'
+    ];
+
+    protected $casts = [
+        'configurations' => 'json'
+    ];
+
+    protected $hidden = [
+        'created_at',
+        'updated_at'
     ];
 }

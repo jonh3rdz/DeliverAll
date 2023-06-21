@@ -6,23 +6,31 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateRateRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
-     */
-    public function rules(): array
+    public function rules()
     {
         return [
-            //
+            'zone' => 'required|max:255',
+            'distance_range_start' => 'required|numeric',
+            'distance_range_end' => 'required|numeric',
+            'rate_amount' => 'required|numeric',
+            'currency' => 'required|max:255',
+            'shipping_type' => 'required|max:255',
+            'validity_date' => 'required|date',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'required' => 'El campo :attribute es obligatorio.',
+            'max' => 'El campo :attribute no debe tener más de :max caracteres.',
+            'numeric' => 'El campo :attribute debe ser numérico.',
+            'date' => 'El campo :attribute debe ser una fecha válida.',
         ];
     }
 }

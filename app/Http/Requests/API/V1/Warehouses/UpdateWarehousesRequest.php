@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\API\V1\PendingPayment;
+namespace App\Http\Requests\API\V1\Warehouses;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StorePendingPaymentRequest extends FormRequest
+class UpdateWarehousesRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

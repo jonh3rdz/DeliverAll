@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class ReportGenerator extends Model
 {
     use HasFactory;
+
+    protected $table = 'report_generators';
+
+    protected $fillable = [
+        'report_type',
+        'generation_date',
+    ];
 }
